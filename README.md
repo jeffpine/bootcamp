@@ -1,121 +1,96 @@
 
-# Projeto: Monitoramento de Carros 🚗
+# 🚀 Desafio: Aprendendo na Prática Programação Orientada a Objetos em Java
 
-## Descrição
-Este projeto tem como objetivo verificar se um carro está apto para rodar com base no **ano de fabricação** e no **ano atual**.  
-Um carro é considerado **Apto** se tiver até 10 anos de uso. Caso contrário, será considerado **Não apto**.
-
-O projeto foi desenvolvido em **Java** aplicando conceitos de **Programação Orientada a Objetos (POO)** e utilização de **métodos estáticos**.
+Este projeto foi desenvolvido como parte do desafio **Aprendendo na Prática POO** da [Digital Innovation One](https://www.dio.me/).  
+O objetivo é colocar em prática os **4 pilares da Orientação a Objetos (POO)**: **Abstração, Encapsulamento, Herança e Polimorfismo**.
 
 ---
 
-## Entrada
-A entrada do programa consiste em:
-1. **Modelo do carro** (`String`)
-2. **Ano de fabricação** (`int`)
-3. **Ano atual** (`int`)
+## 📌 Sobre o Projeto
+O sistema simula um **Bootcamp de Programação**, contendo **cursos**, **mentorias** e **desenvolvedores inscritos**.  
+Cada dev pode se inscrever, progredir nos conteúdos e acumular **XP** (pontos de experiência).
+
+### 🔹 Entidades Modeladas
+- **Conteudo (abstrata)** → Superclasse para cursos e mentorias.  
+- **Curso** → Define título, descrição e carga horária.  
+- **Mentoria** → Define título, descrição e data.  
+- **Bootcamp** → Contém lista de conteúdos e devs inscritos.  
+- **Dev** → Representa o aluno, com métodos para inscrição, progresso e cálculo de XP.  
 
 ---
 
-## Saída
-O programa retorna uma mensagem indicando se o carro está **Apto** ou **Não apto** para rodar, no formato:
-
-```
-<Modelo>: Apto
-```
-ou
-```
-<Modelo>: Nao apto
-```
+## 🧱 Pilares da POO aplicados
+- **Abstração** → `Conteudo` é abstrata, garantindo que cada tipo de conteúdo implemente `calcularXp()`.  
+- **Encapsulamento** → Atributos privados com getters e setters.  
+- **Herança** → `Curso` e `Mentoria` **estendem** `Conteudo`.  
+- **Polimorfismo** → `calcularXp()` é sobrescrito de forma diferente em `Curso` e `Mentoria`.  
 
 ---
 
-## Exemplos
-
-### Exemplo 1
-**Entrada:**
-```
-Civic
-2015
-2025
-```
-**Saída:**
-```
-Civic: Apto
-```
-
-### Exemplo 2
-**Entrada:**
-```
-Gol
-2012
-2025
-```
-**Saída:**
-```
-Gol: Nao apto
-```
-
-### Exemplo 3
-**Entrada:**
-```
-Corolla
-2018
-2025
-```
-**Saída:**
-```
-Corolla: Apto
-```
+## 🛠 Tecnologias Utilizadas
+- ☕ **Java 17**  
+- 🖥 **IntelliJ IDEA** (ou qualquer IDE Java)  
+- 📦 **Collections (Set, HashSet, LinkedHashSet)**  
 
 ---
 
-## Tecnologias Utilizadas
-- **Java 21+**
-- **POO (Programação Orientada a Objetos)**
-- **Métodos Estáticos**
-- **Scanner (entrada de dados)**
+## ▶️ Como Executar
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/bootcamp-poo-java.git
+   ```
+2. Abra o projeto em sua IDE preferida.  
+3. Compile e execute a classe `Main.java`.
 
 ---
 
-## Estrutura do Código
+## 📚 Exemplo de Execução
 
+### Entrada simulada no `Main`:
 ```java
-import java.util.Scanner;
+Curso cursoJava = new Curso("Java Fundamentos", "Sintaxe, OOP, Collections", 12);
+Curso cursoSpring = new Curso("Spring Boot", "REST API, JPA, Tests", 10);
+Mentoria mentoriaCarreira = new Mentoria("Carreira Dev", "Roadmap e portfólio", LocalDate.now());
 
-public class CarroMonitoramento {
+Bootcamp bootcamp = new Bootcamp();
+bootcamp.setNome("Bootcamp Java Developer");
+bootcamp.getConteudos().add(cursoJava);
+bootcamp.getConteudos().add(cursoSpring);
+bootcamp.getConteudos().add(mentoriaCarreira);
 
-    // Método estático que verifica se o carro está apto
-    public static String verificarAptidao(String modelo, int anoFabricacao, int anoAtual) {
-        int idade = anoAtual - anoFabricacao;
-        if (idade <= 10) {
-            return modelo + ": Apto";
-        } else {
-            return modelo + ": Nao apto";
-        }
-    }
+Dev jeff = new Dev("Jeferson Pinheiro");
+jeff.inscreverNoBootcamp(bootcamp);
+jeff.progredir();
+jeff.progredir();
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+System.out.println("XP Jeff: " + jeff.calcularTotalXp());
+```
 
-        // Lendo entradas
-        String modelo = scanner.nextLine();
-        int anoFabricacao = scanner.nextInt();
-        int anoAtual = scanner.nextInt();
+### Saída esperada:
+```
+=== Bootcamp ===
+Bootcamp{nome='Bootcamp Java Developer', descricao='Aprenda Java do zero ao deploy', inicio=2025-08-18, fim=2025-10-02, conteudos=3, devs=2}
 
-        // Chamando método estático
-        String resultado = verificarAptidao(modelo, anoFabricacao, anoAtual);
+=== Devs ===
+Dev{nome='Jeferson Pinheiro', inscritos=1, concluidos=2, xp=220.0}
+Inscritos Jeff: [Mentoria{Título='Carreira Dev', Descrição='Roadmap e portfólio', Data=2025-08-18}]
+Concluídos Jeff: [Curso{Título='Java Fundamentos', Descrição='Sintaxe, OOP, Collections', CargaHoraria=12h}, Curso{Título='Spring Boot', Descrição='REST API, JPA, Tests', CargaHoraria=10h}]
 
-        // Exibindo resultado
-        System.out.println(resultado);
-
-        scanner.close();
-    }
-}
+XP Jeff: 220.0
 ```
 
 ---
 
-## Autor
-👤 **Jeferson Pinheiro de Jesus**  
+## 📖 Conceitos Reforçados
+- Classes, atributos e métodos.  
+- Classes abstratas e polimorfismo.  
+- Relacionamento entre objetos (composição).  
+- Coleções (`Set`, `HashSet`, `LinkedHashSet`).  
+- Encapsulamento e boas práticas com getters e setters.  
+
+---
+
+## 👨‍💻 Autor
+Desenvolvido por **Jeferson Pinheiro de Jesus**  
 🔗 [LinkedIn](https://www.linkedin.com/in/eijeffpinheiro/)
